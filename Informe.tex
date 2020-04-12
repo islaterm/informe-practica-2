@@ -1,0 +1,48 @@
+\documentclass[11pt]{article}
+
+\include{Imports}
+\include{Definitions}
+\include{Config}
+
+\begin{document}
+	\nocite{*}
+	%region	PORTADA
+	\begin{titlepage}
+		\maketitle
+		\thispagestyle{empty}
+	\end{titlepage}
+	%endregion
+
+	\onehalfspacing	%	Interlineado de 1.5
+	%region RESUMEN
+	\pagenumbering{Roman}
+	\begin{abstract}
+		En el presente informe se explica el planteamiento y la solución de un proyecto de 
+		\textit{software} de manejo de flotas bajo el contexto de práctica profesional de
+		ingeniería civil en computación.
+
+		La práctica se llevó a cabo en la célula \textit{Ocean}, perteneciente a 
+		\textit{Entel} y tuvo una duración aproximada de dos meses a jornada completa.
+
+		El objetivo final de la práctica era el de entregar un producto mínimo viable del 
+		sistema solicitado.
+		La solución planteada fue una aplicación móvil basada en una arquitectura 
+		\textit{serverless} modelada como cliente-servidor.
+
+		La modalidad de trabajo se organizó en \textit{sprints} de una y dos semanas, y se
+		rigió por principios de agilidad, donde al final de cada \textit{sprint} se 
+		presentaban los avances del proyecto.
+
+		El sistema entregado al terminar del período de práctica consistió en dos 
+		aplicaciones, una para administradores del sistema, y otra para los conductores de los 
+		vehículos monitoreados.
+		Ambas aplicaciones fueron desarrolladas con un \textit{backend} en \textit{Python} y 
+		un \textit{frontend} en \textit{ReactNative}.
+	\end{abstract}
+	\newpage
+	%endregion
+	
+	%region CONTENIDOS
+	\include{Contenidos}
+	%endregion
+\end{document} 	

@@ -1,0 +1,133 @@
+% region SOLUCION
+\section{Descripción de la solución}
+  La solución al problema planteado se modeló finalmente como dos aplicaciones móviles, 
+  una para el administrador del sistema y otra para los conductores.
+
+  La aplicación del administrador le permitía manejar una pequeña flota de vehículos y 
+  asignar tareas a cada uno de estos.
+
+  Por otro lado, para los conductores el programa mostraba una visualización de las 
+  tareas encomendadas por el administrador (mostrando la ruta hasta destino y los 
+  detalles del pedido) que debía marcar como terminado una vez entregado. 
+  Además se le daba la opción a este usuario de aceptar o rechazar una tarea.
+
+  Para implantar la solución se utilizó el \textit{framework} \textit{serverless.com} que
+  permitía una fácil configuración para distintos servicios de \textit{cloud computing}, 
+  entre los cuales se encuentra \textit{AWS} mediante uno o varios archivos \textit{YAML}.
+
+  A continuación se presentan las funcionalidades y detalles de la implementación para 
+  estas aplicaciones.
+
+  % region ADMIN
+  \subsection{Aplicación del administrador}
+    Para este proyecto, un administrador es un usuario que maneja a los conductores de 
+    una empresa.
+    Ellos se encargan de: 
+    \begin{itemize}
+      \item Crear y asignar tareas a conductores
+      \item crear nuevos conductores y nuevos vehículos
+    \end{itemize}
+
+    Con el fin de facilitar el flujo de información de todos los vehículos, se diseñaron 
+    cuatro pestañas en la parte inferior de la aplicación.
+    \begin{enumerate}
+      \item La primera pestaña comprendía la información de todos los conductores 
+        pertenecientes al sistema.
+        La implementación se hizo de tal forma que al presionar el nombre de alguno de 
+        los conductores se desplegara el detalle de su estado, mostrando su nombre, 
+        ubicación, tareas pendientes y el vehículo en el que se trasladaba.
+      \item En la segunda pestaña se podía acceder a los detalles de los vehículos.
+        La información contenida en esta sección es análoga a la del conductor.
+      \item La tercera pestaña contenía la información de las tareas creadas por el 
+        administrador.
+        En esta sección el administrador tenía la capacidad de crear tareas nuevas y 
+        asignarlas a conductores y vehículos.
+      \item La última pestaña contenía reportes de uso de la aplicación y los vehículos, 
+        tales como la cantidad recorrida por estos el último mes, la cantidad de tareas 
+        completadas por conductor, entre otras.
+    \end{enumerate}
+
+    Para almacenar y administrar los datos se utilizaron bases de datos no relacionales, 
+    específicamente el motor \textit{DynamoDB} ofrecido por \textit{AWS} dada la 
+    flexibilidad que ofrecía respecto a utilizar bases de datos relacionales y su fácil 
+    integración con servicios \textit{serverless}.
+
+    Para conectar la aplicación con el sistema de \textit{cloud computing} se utilizó el 
+    servicio \textit{AWS API Gateway} que permitía la comunicación entre las distintas 
+    partes del programa con los servicios de \textit{Amazon}.
+
+    La conexión con la base de datos y el manejo de la información de estas se realizó en
+    \textit{Python}, modelando las \textit{requests} a la \textit{API} mediante el uso de
+    \textit{AWS Lambda}. 
+    Así, cada petición se estructuraba como una sola función \textit{lambda}, lo que 
+    evitaba tener que manejar servidores, facilitando el modelo de computación en la nube
+    de la aplicación.
+    Además, esto último también facilitaba la integración de plataformas de \textit{IoT}
+    al sistema.
+    
+    El acceso a la base de datos por parte de \textit{Python} se hacía mediante la 
+    librería \textit{boto3} distribuida por \textit{Amazon}.
+
+    Para diseñar el \textit{frontend} de la \textit{app} se utilizó \textit{React Native},
+    lo que permitía crear aplicaciones nativas para plataformas móviles utilizando 
+    \textit{JavaScript}.
+    De esta forma, no eran necesarias implementaciones distintas para \textit{iOS} y 
+    \textit{Android}, ya que el código era compilado a una aplicación nativa para cada 
+    una de estas plataformas.
+
+    El diseño de la interfaz gráfica fue destinada a especialistas en el área de 
+    \textit{UX}, quienes optaron por seguir las normativas de diseño de \textit{Google}, 
+    en particular las definidas en \textit{Material Design}.
+    Luego, el equipo de desarrollo debía implementar las vistas diseñadas en 
+    \textit{React Native}, lo que fue una de las problematicas más importantes a la hora 
+    de poner en funcionamiento la plataforma.
+
+    Si bien \textit{React Native} proveía de las funcionalidades básicas para implementar 
+    aplicaciones nativas, la mayoría de las herramientas estaban construidas por la 
+    comunidad por lo que carecían de soporte oficial.
+    Esto último llevo a que varias de las decisiones de diseño tomadas en un comienzo 
+    tuvieran que modificarse para adaptarse a las limitaciones del \textit{framework}.
+
+    Entre las herramientas de \textit{React} utilizadas destacan: 
+    \textit{react-native-paper}, que provee los elementos necesarios para desarrollar la 
+    interfaz de usuario siguiendo los lineamientos de \textit{Material Design}; 
+    \textit{react-native-maps}, que permitía una conexión de la aplicación con los 
+    servicios de \textit{Google Maps} y \textit{Google Places}; y las librerías 
+    correspondientes a los servicios de \textit{AWS} como \textit{Amplify} y 
+    \textit{Cognito}.
+
+
+    La conexión entre el \textit{backend} y el \textit{frontend} de la aplicación se hizo
+    mediante los \textit{endpoints} generados por \textit{AWS API Gateway}.
+  % endregion
+
+  % region CONDUCTOR
+  \subsection{Aplicación del conductor}
+    La aplicación por parte del conductor se implementó de manera simil a la del 
+    administrador, utilizando los servicios de \textit{AWS} junto con \textit{Python} 
+    y \textit{React Native} para el \textit{backend} y \textit{frontend} respectivamente.
+
+    La gran diferencia de este sistema con el presentada en la sección anterior es que el 
+    conductor tiene menos herramientas disponibles.
+    
+    Entre las facultades que posee el conductor están las de aceptar y rechazar encargos,
+    marcar algún encargo realizado como terminado y cambiar su estado a disponible o 
+    inactivo.
+    Además, al momento de aceptar un pedido, la aplicación decide una ruta óptima hasta 
+    el destino utilizando la \textit{API} de \textit{Google Maps}.
+  % endregion
+  
+  % region PROBLEMAS
+  \subsection{Problemáticas encontradas}
+    El problema más importante al momento de desarrollar la solución fue lo acotado de 
+    los tiempos de entrega, debido a los plazos que se tenían y a que muchas veces los 
+    días laborales se veían acortados por reuniones.
+
+    Además, como se mencionó previamente, uno de los mayores desafíos de la 
+    implementación fue el diseño de la interfaz gráfica con \textit{React Native}.
+    Las principales causas de esta dificultad se debieron al desconocimiento del equipo 
+    respecto a estas herramientas. 
+    Lo anterior implicó dedicar gran parte del tiempo a conocer los estándares de 
+    desarrollo, las herramientas de \textit{testing} y de \textit{debugging}.
+  % endregion
+% endregion

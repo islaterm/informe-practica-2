@@ -1,0 +1,62 @@
+\graphicspath{{img/}}
+
+\makeatletter
+\let\titulo\@title
+\let\autor\@author
+\let\fecha\@date
+
+\def\@maketitle{
+  \centering
+  % Logo de la universidad	
+	\includegraphics[height=3cm]{\logo} \\[1 cm]
+	% Código y nombre del curso
+	\Large{\textsc{\codigoCurso - \nombreCurso}}	\\[0.5 cm]
+  \rule{\linewidth}{0.2 mm} \\[0.4 cm]
+  % Titulo del documento
+	{\huge \textbf{\titulo}}	\\[0.4 cm]
+  % Subtitulo del documento
+  {\huge \textit{\subtitulo}}	\\
+  \rule{\linewidth}{0.2 mm} \\[1.5 cm]
+  \vspace{-6ex}
+  % region LOGO SOLAR TRACKER
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{logos/Solar Tracker.png}    
+  \end{figure}
+  % endregion
+	% Datos autor
+	\begin{minipage}{0.4\textwidth}
+    \begin{flushleft} 
+      {\Large \autor}  \\[0.4 cm]
+      \large{
+        \textit{\rut} \\
+        \mail \\
+        \telefono
+      }
+		\end{flushleft}
+  \end{minipage}
+  % Datos práctica
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright}
+      \large {
+        \textbf{Duración de la práctica:} \\
+        \inicioPractica\ - \finPractica
+      }
+		\end{flushright}	
+	\end{minipage}\\[2 cm]
+  \vfill
+  % Datos informe
+  \large{
+    \fecha \\
+    \ciudad, \pais  \\
+  }
+}
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\autor}
+\lhead{\titulo}
+\cfoot{\thepage}
+
+\addbibresource{Referencias.bib}
